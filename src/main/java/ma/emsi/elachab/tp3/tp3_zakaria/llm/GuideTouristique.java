@@ -12,7 +12,7 @@ public interface GuideTouristique {
             "Tu dois respecter strictement ce format JSON :",
             "{\n" +
                     "  \"ville_ou_pays\": \"nom de la ville ou du pays\",\n" +
-                    "  \"endroit_a_visiter\": [\"endroit 1\", \"endroit 2\"],\n" +
+                    "  \"endroits_a_visiter\": [\"endroit 1\", \"endroit 2\"],\n" +
                     "  \"prix_moyen_repas\": \"<prix> <devise du pays>\"\n" +
                     "}"
     })
