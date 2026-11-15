@@ -1,3 +1,4 @@
+
 package ma.emsi.elachab.tp3.tp3_zakaria.llm;
 
 import dev.langchain4j.service.SystemMessage;
@@ -5,16 +6,36 @@ import dev.langchain4j.service.UserMessage;
 
 public interface GuideTouristique {
 
-    @SystemMessage({
-            "N'utilise pas Markdown, réponds uniquement avec du JSON pur.",
-            "Tu es un guide touristique expert. Pour la ville ou le pays passé en paramètre, " +
-                    "indique les 2 principaux endroits à visiter et le prix moyen d'un repas dans la devise du pays.",
-            "Tu dois respecter strictement ce format JSON :",
-            "{\n" +
-                    "  \"ville_ou_pays\": \"nom de la ville ou du pays\",\n" +
-                    "  \"endroits_a_visiter\": [\"endroit 1\", \"endroit 2\"],\n" +
-                    "  \"prix_moyen_repas\": \"<prix> <devise du pays>\"\n" +
-                    "}"
-    })
-    String getGuide(@UserMessage String lieu);
+    @SystemMessage("""
+        Tu es un guide touristique expert.
+
+        Pour chaque ville ou pays demandé :
+        - Indique exactement le nombre d'endroits
+          à visiter précisé par l'utilisateur.
+        - Donne le prix moyen d'un repas
+          dans la devise locale.
+
+        Réponds uniquement avec du JSON valide.
+        N'utilise pas Markdown.
+
+        Utilise exactement ces trois propriétés :
+        - ville_ou_pays
+        - endroits_a_visiter
+        - prix_moyen_repas
+
+        Le format attendu est :
+        {
+          "ville_ou_pays": "nom de la destination",
+          "endroits_a_visiter": [
+            "lieu touristique"
+          ],
+          "prix_moyen_repas": "prix et devise"
+        }
+
+        Le tableau endroits_a_visiter doit contenir
+        exactement le nombre d'éléments demandé.
+        N'ajoute aucune autre propriété.
+        """)
+
+    String getGuide(@UserMessage String demande);
 }
